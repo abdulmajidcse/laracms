@@ -5,7 +5,6 @@ namespace App\Services;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class ApiResponse

@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Repositories\UserRepository;
 use App\Services\ApiResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -14,7 +15,7 @@ class UserLogin
         protected UserRepository $userRepository
     ) {}
 
-    public function handle(array $credentials)
+    public function handle(array $credentials): JsonResponse
     {
         $user = $this->userRepository->findByEmail($credentials['email']);
 
