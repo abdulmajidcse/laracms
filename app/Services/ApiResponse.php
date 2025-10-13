@@ -10,9 +10,6 @@ use Throwable;
 
 class ApiResponse
 {
-    /**
-     * Send a generic JSON response.
-     */
     public function send(
         bool $success,
         string $message,
@@ -32,9 +29,6 @@ class ApiResponse
         return response()->json($response, $statusCode, $headers);
     }
 
-    /**
-     * Success response (generic).
-     */
     public function success(
         mixed $data = null,
         string $message = 'Success',
@@ -46,9 +40,6 @@ class ApiResponse
         return $this->send(true, $message, $code, $data, $statusCode, $headers, $extra);
     }
 
-    /**
-     * Return a single resource.
-     */
     public function resource(
         JsonResource $resource,
         string $message = 'Success',
@@ -59,9 +50,6 @@ class ApiResponse
         return $this->success($resource, $message, $code, $statusCode, $headers);
     }
 
-    /**
-     * Return a resource collection.
-     */
     public function collection(
         ResourceCollection $collection,
         string $message = 'Success',
@@ -74,23 +62,6 @@ class ApiResponse
         return $this->success($data, $message, $code, $statusCode, $headers);
     }
 
-    /**
-     * Validation error response.
-     */
-    public function validationError(ValidationException $e): JsonResponse
-    {
-        return $this->error(
-            $e->getMessage(),
-            'validation_error',
-            422,
-            $e,
-            ['errors' => $e->errors()]
-        );
-    }
-
-    /**
-     * General error handler.
-     */
     public function error(
         string $message,
         string $code = 'error',
@@ -117,9 +88,6 @@ class ApiResponse
         return response()->json(array_merge($payload, $extra), $statusCode);
     }
 
-    /**
-     * Common error shortcuts.
-     */
     public function unauthorized(string $message = 'Unauthorized'): JsonResponse
     {
         return $this->error($message, 'unauthorized', 401);
