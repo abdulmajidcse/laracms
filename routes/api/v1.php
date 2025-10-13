@@ -1,16 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\LoginController;
+use App\Http\Controllers\Api\V1\LogoutController;
+use App\Http\Controllers\Api\V1\ProfileController;
 
 Route::prefix('v1')
     ->name('v1.')
     ->group(function () {
-        Route::post('login', [AuthController::class, 'login'])->name('login');
+        Route::post('login', LoginController::class)->name('login');
 
         Route::middleware('auth:sanctum')
             ->group(function () {
-                Route::get('user', [AuthController::class, 'user'])->name('user');
-                Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+                Route::get('user', ProfileController::class)->name('user');
+                Route::post('logout', LogoutController::class)->name('logout');
             });
     });
