@@ -7,8 +7,8 @@ use App\Services\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\UserResource;
+use App\Contracts\UserRepositoryContract;
 use App\Http\Requests\V1\ProfileUpdateRequest;
-use App\Repositories\UserRepository;
 
 class ProfileController extends Controller
 {
@@ -22,9 +22,11 @@ class ProfileController extends Controller
         );
     }
 
-    public function update(ProfileUpdateRequest $request, UserRepository $userRepo): JsonResponse
-    {
-        $userRepo->updateProfile($request->user(), $request->validated());
+    public function update(
+        ProfileUpdateRequest $request,
+        UserRepositoryContract $userContract
+    ): JsonResponse {
+        $userContract->updateProfile($request->user(), $request->validated());
 
         return $this->apiResponse->success(message: 'Profile updated successfully.');
     }
