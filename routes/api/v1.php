@@ -12,7 +12,14 @@ Route::prefix('v1')
 
         Route::middleware('auth:sanctum')
             ->group(function () {
-                Route::get('user', ProfileController::class)->name('user');
+                Route::controller(ProfileController::class)
+                    ->prefix('user')
+                    ->name('user.')
+                    ->group(function () {
+                        Route::get('/', 'show')->name('show');
+                        Route::patch('/', 'update')->name('update');
+                    });
+
                 Route::post('logout', LogoutController::class)->name('logout');
             });
     });

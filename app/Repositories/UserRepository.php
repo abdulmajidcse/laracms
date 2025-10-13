@@ -19,4 +19,15 @@ class UserRepository implements UserRepositoryInterface
             ->where('email', $email)
             ->first();
     }
+
+    public function updateProfile(User $user, array $data): void
+    {
+        $user->fill($data);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
+    }
 }

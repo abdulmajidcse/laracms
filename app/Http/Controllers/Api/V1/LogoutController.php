@@ -14,6 +14,6 @@ class LogoutController extends Controller
     public function __invoke(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
-        return $this->apiResponse->success(message: "Logout successfully");
+        return $this->apiResponse->success(message: "Logout successfully.");
     }
 }

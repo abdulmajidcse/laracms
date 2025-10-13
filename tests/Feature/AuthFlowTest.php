@@ -34,7 +34,7 @@ class AuthFlowTest extends TestCase
 
         Sanctum::actingAs($user);
 
-        $response = $this->getJson(route('api.v1.user'));
+        $response = $this->getJson(route('api.v1.user.show'));
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -44,6 +44,20 @@ class AuthFlowTest extends TestCase
                     'email',
                 ],
             ]);
+    }
+
+    public function test_authenticated_user_can_update_profile(): void
+    {
+        $user = User::factory()->create();
+
+        Sanctum::actingAs($user);
+
+        $response = $this->patchJson(route('api.v1.user.update'), [
+            'name' => 'Abdul Majid',
+            'email' => 'abdulmajid@gmail.com',
+        ]);
+
+        $response->assertStatus(200);
     }
 
     public function test_authenticated_user_can_logout(): void
@@ -58,7 +72,8 @@ class AuthFlowTest extends TestCase
 
     public function test_guest_cannot_access_protected_routes(): void
     {
-        $this->getJson(route('api.v1.user'))->assertStatus(401);
+        $this->getJson(route('api.v1.user.show'))->assertStatus(401);
+        $this->getJson(route('api.v1.user.update'))->assertStatus(401);
         $this->postJson(route('api.v1.logout'))->assertStatus(401);
     }
 }
