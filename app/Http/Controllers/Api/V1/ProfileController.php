@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\UserResource;
 use App\Contracts\UserRepositoryContract;
-use App\Http\Requests\V1\ProfileUpdateRequest;
+use App\Http\Requests\Api\V1\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {

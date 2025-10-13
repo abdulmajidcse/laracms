@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ContentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\LoginController;
 use App\Http\Controllers\Api\V1\LogoutController;
@@ -21,5 +22,16 @@ Route::prefix('v1')
                     });
 
                 Route::post('logout', LogoutController::class)->name('logout');
+
+                Route::controller(ContentController::class)
+                    ->prefix('contents')
+                    ->name('contents.')
+                    ->group(function () {
+                        Route::get('/', 'index')->name('index');
+                        Route::post('/', 'store')->name('store');
+                        Route::get('{id}', 'show')->name('show');
+                        Route::put('{id}', 'update')->name('update');
+                        Route::delete('{id}', 'destroy')->name('destroy');
+                    });
             });
     });
