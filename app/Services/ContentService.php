@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Actions\ContentOrderAction;
+use App\Services\ContentOrder;
 use App\Contracts\ContentRepositoryContract;
 use App\Http\Resources\V1\ContentResource;
 use App\Models\Content;
@@ -14,7 +14,7 @@ class ContentService
     public function __construct(
         private ContentRepositoryContract $contentContract,
         private ApiResponse $apiResponse,
-        private ContentOrderAction $contentOrder
+        private ContentOrder $contentOrder
     ) {}
 
     public function paginate(int $perPage = 10): JsonResponse

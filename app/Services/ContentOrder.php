@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Actions;
+namespace App\Services;
 
 use App\Contracts\ContentRepositoryContract;
 
-class ContentOrderAction
+class ContentOrder
 {
     protected int $gap = 5;
 
