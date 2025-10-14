@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Api\V1;
 
-use App\ContentStatus;
-use App\ContentType;
+use App\Enums\ContentStatus;
+use App\Enums\ContentType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
