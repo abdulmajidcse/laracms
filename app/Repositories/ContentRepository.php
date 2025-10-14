@@ -19,7 +19,7 @@ class ContentRepository implements ContentRepositoryContract
     {
         return $this->query()
             ->with('createdBy', 'updatedBy')
-            ->latest('order')
+            ->oldest('order')
             ->paginate($perPage);
     }
 
