@@ -2,7 +2,7 @@
 
 namespace App\Actions;
 
-use App\Contracts\UserRepositoryInterface;
+use App\Contracts\UserRepositoryContract;
 use App\Services\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
@@ -12,12 +12,12 @@ class UserLogin
 {
     public function __construct(
         protected ApiResponse $apiResponse,
-        protected UserRepositoryInterface $users
+        protected UserRepositoryContract $userContract
     ) {}
 
     public function handle(array $credentials): JsonResponse
     {
-        $user = $this->users->findByEmail($credentials['email']);
+        $user = $this->userContract->findByEmail($credentials['email']);
 
         if ($user && Hash::check($credentials['password'], $user->password)) {
             $token = $user->createToken('api');

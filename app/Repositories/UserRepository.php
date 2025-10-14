@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Contracts\UserRepositoryInterface;
+use App\Contracts\UserRepositoryContract;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository implements UserRepositoryContract
 {
     private function query(): Builder
     {
