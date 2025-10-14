@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Content;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Contracts\ContentRepositoryContract;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -27,8 +28,13 @@ class ContentRepository implements ContentRepositoryContract
     {
         return $this->query()
             ->with('createdBy', 'updatedBy')
-            ->where('id', $id)
-            ->first();
+            ->find($id);
+    }
+
+    public function findOrFail(int $id): Content
+    {
+        return $this->query()
+            ->findOrFail($id);
     }
 
     public function maxOrder(): ?float
@@ -52,5 +58,39 @@ class ContentRepository implements ContentRepositoryContract
         return $this->query()
             ->where('id', $id)
             ->delete();
+    }
+
+    public function prevByOrder(float $order): ?Content
+    {
+        return $this->query()
+            ->where('order', '<', $order)
+            ->latest('order')
+            ->first();
+    }
+
+    public function nextByOrder(float $order): ?Content
+    {
+        return $this->query()
+            ->where('order', '>', $order)
+            ->oldest('order')
+            ->first();;
+    }
+
+    public function orderable(array $ids): Collection
+    {
+        return $this->query()
+            ->whereIn('id', $ids)
+            ->lockForUpdate()
+            ->get()
+            ->keyBy('id');
+    }
+
+    public function updateOrder(float $order, Content $content): Content
+    {
+        $content->order = $order;
+        $content->updated_by = Auth::id();
+        $content->save();
+
+        return $content;
     }
 }

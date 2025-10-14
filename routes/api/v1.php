@@ -33,6 +33,7 @@ Route::prefix('v1')
                         Route::put('{id}', 'update')->name('update');
                         Route::delete('{id}', 'destroy')->name('destroy');
                         Route::post('upload-file', 'uploadFile')->name('uploadFile');
+                        Route::patch('reorder', 'reorder')->name('reorder');
                     });
             });
     });
