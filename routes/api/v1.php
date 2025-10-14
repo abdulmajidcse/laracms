@@ -32,6 +32,7 @@ Route::prefix('v1')
                         Route::get('{id}', 'show')->name('show');
                         Route::put('{id}', 'update')->name('update');
                         Route::delete('{id}', 'destroy')->name('destroy');
+                        Route::post('upload-file', 'uploadFile')->name('uploadFile');
                     });
             });
     });
