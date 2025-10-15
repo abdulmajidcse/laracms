@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Services\ContentOrder;
 use App\Contracts\ContentRepositoryContract;
+use App\DTOs\ContentFilterData;
 use App\Http\Resources\V1\ContentResource;
 use App\Models\Content;
 use Illuminate\Http\JsonResponse;
@@ -17,9 +18,10 @@ class ContentService
         private ContentOrder $contentOrder
     ) {}
 
-    public function paginate(int $perPage = 10): JsonResponse
+    public function paginate(array $data, int $perPage = 10): JsonResponse
     {
-        $contents = $this->contentContract->paginate($perPage);
+        $filterData = app(ContentFilterData::class, ['data' => $data]);
+        $contents = $this->contentContract->paginate($filterData, $perPage);
 
         return $this->apiResponse->collection(
             ContentResource::collection($contents),

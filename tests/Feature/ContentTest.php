@@ -26,10 +26,55 @@ class ContentTest extends TestCase
 
     public function test_user_can_view_list_contents(): void
     {
-        Content::factory()->count(3)->create();
+        Content::factory()->create([
+            'title' => 'Homepage Banner',
+            'type' => ContentType::BANNER,
+            'status' => ContentStatus::ACTIVE,
+        ]);
+
+        Content::factory()->create([
+            'title' => 'Promo Video',
+            'type' => ContentType::CARD,
+            'status' => ContentStatus::INACTIVE,
+        ]);
+
+        Content::factory()->create([
+            'title' => 'Sidebar Banner',
+            'type' => ContentType::BANNER,
+            'status' => ContentStatus::INACTIVE,
+        ]);
 
         $this->getJson(route('api.v1.contents.index'))
-            ->assertOk();
+            ->assertOk()
+            ->assertJsonCount(3, 'result.data');
+
+        $this->getJson(route('api.v1.contents.index', [
+            'type' => ContentType::BANNER,
+        ]))
+            ->assertOk()
+            ->assertJsonFragment(['title' => 'Homepage Banner'])
+            ->assertJsonMissing(['title' => 'Promo Video']);
+
+        $this->getJson(route('api.v1.contents.index', [
+            'status' => ContentStatus::ACTIVE,
+        ]))
+            ->assertOk()
+            ->assertJsonFragment(['title' => 'Homepage Banner'])
+            ->assertJsonMissing(['title' => 'Sidebar Banner']);
+
+        $this->getJson(route('api.v1.contents.index', [
+            'search' => 'Promo',
+        ]))
+            ->assertOk()
+            ->assertJsonFragment(['title' => 'Promo Video'])
+            ->assertJsonMissing(['title' => 'Homepage Banner']);
+
+        $this->getJson(route('api.v1.contents.index', [
+            'sort_by' => 'title',
+            'sort_dir' => 'asc',
+        ]))
+            ->assertOk()
+            ->assertJsonStructure(['result' => ['data']]);
     }
 
     public function test_user_can_store_a_content(): void

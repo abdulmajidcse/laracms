@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Contracts\ContentRepositoryContract;
+use App\DTOs\ContentFilterData;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ContentRepository implements ContentRepositoryContract
@@ -16,13 +17,17 @@ class ContentRepository implements ContentRepositoryContract
         return Content::query();
     }
 
-    public function paginate(int $perPage = 10): LengthAwarePaginator
+    public function paginate(ContentFilterData $filterData, int $perPage = 10): LengthAwarePaginator
     {
         return $this->query()
-            ->with('createdBy', 'updatedBy')
-            ->oldest('order')
+            ->with(['createdBy', 'updatedBy'])
+            ->search($filterData->search)
+            ->when($filterData->type, fn($q) => $q->where('type', $filterData->type))
+            ->when($filterData->status, fn($q) => $q->where('status', $filterData->status))
+            ->orderBy($filterData->sortBy, $filterData->sortDir)
             ->paginate($perPage);
     }
+
 
     public function findById(int $id): ?Content
     {
