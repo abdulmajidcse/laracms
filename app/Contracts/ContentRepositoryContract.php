@@ -2,13 +2,14 @@
 
 namespace App\Contracts;
 
+use App\DTOs\ContentFilterData;
 use App\Models\Content;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 interface ContentRepositoryContract
 {
-    public function paginate(int $perPage = 10): LengthAwarePaginator;
+    public function paginate(ContentFilterData $filterData, int $perPage = 10): LengthAwarePaginator;
 
     public function findById(int $id): ?Content;
 

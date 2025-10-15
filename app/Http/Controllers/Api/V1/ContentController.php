@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Actions\FileUploadAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\ContentFilterRequest;
 use App\Http\Requests\Api\V1\ContentReorderRequest;
 use App\Http\Requests\Api\V1\ContentRequest;
 use App\Http\Requests\Api\V1\FileUploadRequest;
@@ -17,9 +18,9 @@ class ContentController extends Controller
         private ContentService $contentService
     ) {}
 
-    public function index(): JsonResponse
+    public function index(ContentFilterRequest $request): JsonResponse
     {
-        return $this->contentService->paginate();
+        return $this->contentService->paginate($request->validated());
     }
 
     public function store(ContentRequest $request): JsonResponse
