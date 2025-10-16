@@ -13,18 +13,17 @@ It includes advanced **ordering**, and **Bulk ordering** features for flexible c
 
 2. **Install dependencies:**
     Create a database like `laracms` and another one is `testing` if you want to run test. Actually follow db information in .env.example file.
+    Open your .env.example and update your db information if needed.
     ```bash
     composer run setup
     ```
 
-3. **Configure environment:**
-    - Update database credentials to `.env`.
-
-4. **Start the development server:**
+3. **Start the development server:**
     ```bash
     composer run dev
     ```
     Now, visit http://localhost:8000.
+  - API base url: http://localhost:8000/api/v1
     
 ### [View API Documentation](https://documenter.getpostman.com/view/17226874/2sB3QNqogy)
 
