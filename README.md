@@ -25,7 +25,9 @@ It includes advanced **ordering**, and **Bulk ordering** features for flexible c
     composer run dev
     ```
     Now, visit http://localhost:8000.
-    <!-- api docs here -->
+    
+### [View API Documentation](https://documenter.getpostman.com/view/17226874/2sB3QNqogy)
+
 
 ---
 
