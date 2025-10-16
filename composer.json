@@ -43,7 +43,8 @@
             "@php artisan migrate --force",
             "@php artisan db:seed",
             "npm install",
-            "npm run build"
+            "npm run build",
+            "@php artisan storage:link"
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",

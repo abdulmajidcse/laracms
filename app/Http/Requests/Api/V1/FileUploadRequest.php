@@ -23,7 +23,7 @@ class FileUploadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required', File::image()->max(1024)]
+            'file' => ['required', File::types(['jpg', 'jpeg', 'png', 'pdf'])->max(1024)]
         ];
     }
 }

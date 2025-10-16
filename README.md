@@ -12,6 +12,7 @@ It includes advanced **ordering**, and **Bulk ordering** features for flexible c
     ```
 
 2. **Install dependencies:**
+    Create a database like `laracms` and another one is `testing` if you want to run test. Actually follow db information in .env.example file.
     ```bash
     composer run setup
     ```
